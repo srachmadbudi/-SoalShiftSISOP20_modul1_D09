@@ -15,7 +15,7 @@ then
         char_awal=`chr $int_awal`
         char_akhir=`chr $int_akhir`
 
-        dekrip="$(echo "$file" | tr ["$char_awal"-za-"$char_akhir"] [a-z] | tr$
+        dekrip="$(echo "$file" | tr ["$char_awal"-za-"$char_akhir"] [a-z] | tr ["${char_awal^^}"-ZA-"${char_akhir^^}"] [A-Z])"
 
         cp $1 $dekrip.txt
         echo "Nama file berhasil didekripsi menjadi $dekrip.txt"
