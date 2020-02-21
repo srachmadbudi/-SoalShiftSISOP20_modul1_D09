@@ -15,7 +15,7 @@ then
         char_awal=`chr $int_awal`
         char_akhir=`chr $int_akhir`
 
-        enkrip="$(echo "$file" | tr [a-z] ["$char_awal"-za-"$char_akhir"] | tr$
+        enkrip="$(echo "$file" | tr [a-z] ["$char_awal"-za-"$char_akhir"] | tr [A-Z] ["${char_awal^^}"-ZA-"${char_akhir^^}"])"
 
         mv $file.txt $enkrip.txt
         echo "File berhasil dipindah ke $enkrip.txt"
