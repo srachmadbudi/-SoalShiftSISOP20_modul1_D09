@@ -4,8 +4,7 @@ Rachmad Budi Santoso    05111840000122
 Khofifah Nurlaela       05111840000025
 ```
 
-## 1
-### Soal
+## soal1
 > Whits adalah seorang mahasiswa teknik informatika. Dia mendapatkan tugas praktikum
 untuk membuat laporan berdasarkan data yang ada pada file “Sample-Superstore.tsv”.
 Namun dia tidak dapat menyelesaikan tugas tersebut. Laporan yang diminta berupa :
@@ -16,10 +15,10 @@ sedikit berdasarkan hasil poin a!
 >- c. Tampilkan 10 produk (product name) yang memiliki keuntungan (profit) paling
 sedikit berdasarkan 2 negara bagian (state) hasil poin b!
 
->Whits memohon kepada kalian yang sudah jago mengolah data untuk mengerjakan
-laporan tersebut.
->*Gunakan Awk dan Command pendukung
+> Whits memohon kepada kalian yang sudah jago mengolah data untuk mengerjakan
+laporan tersebut. *Gunakan Awk dan Command pendukung
 
+### 1.a
 ```
 #!/bin/bash
 
@@ -36,9 +35,29 @@ END {
 region=$(cut -d ' ' -f2 <<<"$onea")
 echo -e "1.a) Region dengan profit terkecil adalah $region\n"
 ```
+Pada bagian 1.a ini kita sebagai yang sudah jago mengolah data membantu Whits untuk mentukan wilayah bagian (region) mana yang memiliki keuntungan (profit) paling sedikit.
+```
+onea=$(awk -F "\t" '
+```
+Pada syntax tersebut kami menggunakan awk untuk membaca data dari file berdasarkan separator tab `\t` sebagai pemisahnya.
+
+Selanjutnya, syntax `{groupby[$13]+=$21}` berfungsi untuk mengelompokkan dan menambahkan isi array berdasarkan profit pada kolom `$21` dari setiap region pada kolom `$13`.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```
-<code>
 #______________________________________________________________________
 #number1b
 oneb=$(awk -F "\t" -v reg="$region" '
@@ -57,7 +76,6 @@ state1=$(cut -d ' ' -f2 <<<"$state1")
 state2=$(cut -d $'\n' -f2 <<<"$oneb")
 state2=$(cut -d ' ' -f2 <<<"$state2")
 echo -e "1.b) State dengan profit terkecil adalah $state1 dan $state2\n"
-</code>
 ```
 
 ```
