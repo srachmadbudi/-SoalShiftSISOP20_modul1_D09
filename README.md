@@ -118,7 +118,7 @@ echo -e  "1.c) Produk yang memiliki profit paling sedikit berdasarkan negara bag
  -$p1\n -$p2\n -$p3\n -$p4\n -$p5\n -$p6\n -$p7\n -$p8\n -$p9\n -$p10\n"
 </code>
 ```
-## soal1
+## soal2
 > Pada suatu siang, laptop Randolf dan Afairuzr dibajak oleh seseorang dan kehilangan data-data penting. 
 Untuk mencegah kejadian yang sama terulang kembali mereka meminta bantuan kepada Whits karena dia adalah 
 seorang yang punya banyak ide. Whits memikirkan sebuah ide namun dia meminta bantuan kalian kembali agar ide
@@ -138,6 +138,7 @@ z ​ , akan kembali ke ​ a ​ , contoh: huruf ​ w dengan jam 5.28, maka ak
 > HINT: enkripsi yang digunakan adalah caesar cipher.
 > *Gunakan Bash Script
 
+## 2(a)(b)
 Untuk menyimpan password yang telah digenerate, user akan menginputkan nama file di mana password tersebut
 akan disimpan.
 Sebelumnya akan dicek dulu, apakah nama file yang diinputkan tersebut hanya mengandung alphabet?
@@ -156,8 +157,80 @@ if [[ $var =~ ^[A-Za-z.]+$ ]]
 fi
 ```
 
-Untuk menghasilkan password dengan ketentuan 28 karakter yang terdapat huruf besar, huruf kecil,dan angka.
+Untuk menghasilkan password dengan ketentuan 28 karakter yang terdapat huruf besar, huruf kecil, dan angka.
 
-        ```
+        
         cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 28	
-        ```
+        
+## 2(c)
+Sama seperti pada program untuk men-generate password.
+Yang mana nama file yang akan dienkripsi akan dicek terlebih dahulu.
+Apakah nama file yang diinputkan hanya mengandung alphabet?
+Jika iya, maka nama file akan dienkripsi.
+Jika tidak, akan ditampilkan pesan error.
+```
+#!/bin/bash
+
+if [[ $1 =~ ^[A-Za-z.]+$ ]]
+then  
+        file=$(echo $1 | cut -d '.' -f1)
+        geser=$(stat -c %w $1 | date +"%k" -r $1)
+
+        int_awal=`expr $geser + 97`
+        int_akhir=`expr $geser + 96`
+
+        chr() {
+          printf "\\$(printf '%03o' "$1")"
+        }
+
+        char_awal=`chr $int_awal`
+        char_akhir=`chr $int_akhir`
+
+        enkrip="$(echo "$file" | tr [a-z] ["$char_awal"-za-"$char_akhir"] | tr$
+        mv $file.txt $enkrip.txt
+        echo "File berhasil dipindah ke $enkrip.txt"
+
+else echo "Nama file hanya menggunakan alphabet."
+fi
+```
+
+```
+cut -d '.' -f1 
+```
+Digunakan untuk memotong string setelah tanda '.' 
+Sehingga didapat nama file tanpa ekstensi file yang kemudian nama file tersebut akan dienkripsi. 
+
+```
+stat -c %w $1 | date +"%k" -r $1
+```
+Digunakan untuk mendapatkan waktu dibuatnya file yang berisi password dalam satuan jam.
+Yang kemudian digunakan untuk mengenkripsi nama file.
+
+```
+expr $geser + 97
+expr $geser + 96
+```
+Waktu dalam satuan jam yang didapat tadi kemudian ditambah dengan 97,
+karena nilai dari karakter a dalam ASCII adalah 97.
+Diperlukan juga variabel lain yang ditambak dengan 96, untuk mengatasi error.
+Karena setelah huruf z akan kembali ke huruf a.
+
+```
+chr() {
+          printf "\\$(printf '%03o' "$1")"
+ }
+ ```       
+ Digunakan untuk mengubah nilai ASCII menjadi karakter.
+ 
+ ```
+ tr [a-z] ["$char_awal"-za-"$char_akhir"] | 
+ tr [A-Z] ["${char_awal^^}"ZA-"${char_akhir^^}"])"
+ ```
+ Digunakan untuk mengenkripsi, baik huruf kecil maupun huruf besar.
+ 
+ ```
+ mv $file.txt $enkrip.txt
+ ```
+ Digunakan untuk merename nama file.
+ 
+ 
