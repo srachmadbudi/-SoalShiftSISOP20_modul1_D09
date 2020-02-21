@@ -309,3 +309,6 @@ else "Nama file hanya menggunakan alphabet."
 fi
 ```
 Menggunakan algoritma yang sama dengan nomor 2 (c) hanya beda input.
+
+
+## Nomor 3 blm selesai mas maaf
