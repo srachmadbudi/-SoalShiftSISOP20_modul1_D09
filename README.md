@@ -144,12 +144,17 @@ akan disimpan.
 > Jika iya, maka program akan men-generate password kemudian akan disimpan ke dalam file yang sudah
 diinputkan namanya.
 > Jika tidak, maka akan ditampilkan pesan error.
-
+```
 #!/bin/bash
 var=$1
 if [[ $var =~ ^[A-Za-z.]+$ ]]
-> Untuk menghasilkan password dengan ketentuan 28 karakter yang terdapat huruf besar, huruf kecil,dan angka.
+```
+Untuk menghasilkan password dengan ketentuan 28 karakter yang terdapat huruf besar, huruf kecil,dan angka.
+        ```
         then cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 28 >> $var	
-        Pesan error yang ditampilkan.
- 	else echo "Nama file hanya menggunakan alphabet."	
+        ```
+Pesan error yang ditampilkan.
+```
+        else echo "Nama file hanya menggunakan alphabet."	
 fi
+```
