@@ -1,12 +1,24 @@
 # SoalShiftSISOP20_modul1_D09
 ```
 Rachmad Budi Santoso    05111840000122
-Khofifah Nurlaela       05111840000***
+Khofifah Nurlaela       05111840000025
 ```
 
 ## Nomor 1
-### 1a
-#### Soal
+### Soal
+> Whits adalah seorang mahasiswa teknik informatika. Dia mendapatkan tugas praktikum
+untuk membuat laporan berdasarkan data yang ada pada file “Sample-Superstore.tsv”.
+Namun dia tidak dapat menyelesaikan tugas tersebut. Laporan yang diminta berupa :
+a. Tentukan wilayah bagian (region) mana yang memiliki keuntungan (profit) paling
+sedikit
+b. Tampilkan 2 negara bagian (state) yang memiliki keuntungan (profit) paling
+sedikit berdasarkan hasil poin a
+c. Tampilkan 10 produk (product name) yang memiliki keuntungan (profit) paling
+sedikit berdasarkan 2 negara bagian (state) hasil poin b
+Whits memohon kepada kalian yang sudah jago mengolah data untuk mengerjakan
+laporan tersebut.
+*Gunakan Awk dan Command pendukung
+
 ```
 #!/bin/bash
 
@@ -24,6 +36,7 @@ region=$(cut -d ' ' -f2 <<<"$onea")
 echo -e "1.a) Region dengan profit terkecil adalah $region\n"
 ```
 
+```
 <code>
 #______________________________________________________________________
 #number1b
@@ -44,7 +57,9 @@ state2=$(cut -d $'\n' -f2 <<<"$oneb")
 state2=$(cut -d ' ' -f2 <<<"$state2")
 echo -e "1.b) State dengan profit terkecil adalah $state1 dan $state2\n"
 </code>
+```
 
+```
 <code>
 #_______________________________________________________________________
 #number1c
@@ -83,3 +98,4 @@ echo -e  "1.c) Produk yang memiliki profit paling sedikit berdasarkan negara bag
      $state1 dan $state2 adalah sebagai berikut:\n
  -$p1\n -$p2\n -$p3\n -$p4\n -$p5\n -$p6\n -$p7\n -$p8\n -$p9\n -$p10\n"
 </code>
+```
