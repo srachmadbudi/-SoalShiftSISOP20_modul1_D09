@@ -43,20 +43,30 @@ Pada syntax tersebut kami menggunakan awk untuk membaca data dari file berdasark
 
 Selanjutnya, syntax `{groupby[$13]+=$21}` berfungsi untuk mengelompokkan dan menambahkan isi array berdasarkan profit pada kolom `$21` dari setiap region pada kolom `$13`.
 
+```
+END {
+        for(reg in groupby) {
+                print groupby[reg], reg
+        }
+}
+```
+Pada bagian END, kami melakukan looping untuk menampilkan seluruh profit `groupby[reg]` dari setiap region `reg`.
+
+`sort -g` Mengurutkan data secara general, termasuk positif dan negatif.
+`head -2` Menampilkan 2 data teratas dengan profit terkecil.
+`tail -1` Menampilkan 1 data dari bawah.
+
+Hal ini dilakukan karena kami melakukan perhitungan sejak kolom pertama, dimana pada kolom `$13` dimulai dengan title `region` yang berisi profit terkecil karena tidak memiliki data atau dengan kata lain berisi string huruf bukan angka sehingga menjadi yang terkecil. Untuk mengabaikan judul kolom tersebut maka digunakanlah cara diatas.
+
+```
+region=$(cut -d ' ' -f2 <<<"$onea")
+echo -e "1.a) Region dengan profit terkecil adalah $region\n"
+```
+Syntax diatas berfungsi untuk memisahkan komponen dari hasil pencarian yang dilakukan (Jumlah profit[spasi]Region).
+`cut -d ''` Memisahkan komonen berdasarkan spasi, `-f2` menampilkan field kedua dari komponen tersebut (hanya nama regionnya saja yang ditampilkan).
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+### 1.b
 ```
 #______________________________________________________________________
 #number1b
@@ -77,9 +87,44 @@ state2=$(cut -d $'\n' -f2 <<<"$oneb")
 state2=$(cut -d ' ' -f2 <<<"$state2")
 echo -e "1.b) State dengan profit terkecil adalah $state1 dan $state2\n"
 ```
+Pada bagian 1.b ini kita sebagai yang sudah jago mengolah data membantu Whits untuk mentukan 2 negara bagian (state) yang memiliki keuntungan (profit) paling sedikit berdasarkan hasil poin a.
 
 ```
-<code>
+oneb=$(awk -F "\t" -v reg="$region" '
+```
+Pada syntax tersebut kami menggunakan awk untuk membaca data dari file berdasarkan separator tab `\t` sebagai pemisahnya dan menggunakan data `$region` yang sudah diperoleh pada bagian a.
+
+```
+$13 ~ reg {
+        groupby[$11]+=$21
+}
+```
+Selanjutnya, syntax `{groupby[$13]+=$21}` berfungsi untuk mengelompokkan dan menambahkan isi array berdasarkan profit pada kolom `$21` dari setiap state pada kolom `$11` yang sebelumnya sudah difilter menggunakan data region(regex `~` mencari komponen yang mengandung `reg`).
+
+```
+END {
+        for( state in groupby ) {
+                print groupby[state], state
+        }
+}
+```
+Pada bagian END, kami melakukan looping untuk menampilkan seluruh profit `groupby[state]` dari setiap negara bagian `state`.
+`sort -g` Mengurutkan data secara general, termasuk positif dan negatif.
+`head -2` Menampilkan 2 data teratas dengan profit terkecil. 
+
+```
+state1=$(cut -d $'\n' -f1 <<<"$oneb")
+state1=$(cut -d ' ' -f2 <<<"$state1")
+state2=$(cut -d $'\n' -f2 <<<"$oneb")
+state2=$(cut -d ' ' -f2 <<<"$state2")
+echo -e "1.b) State dengan profit terkecil adalah $state1 dan $state2\n"
+```
+Syntax diatas berfungsi untuk memisahkan komponen dari hasil pencarian yang dilakukan (Jumlah profit[spasi]State).
+`cut -d $'\n'` Memisahkan komonen berdasarkan enter, `-f1` menampilkan field pertama dari komponen tersebut  `cut -d ' '` Memisahkan komonen berdasarkan spasi, `-f2` menampilkan field kedua dari komponen tersebut (hanya nama regionnya saja yang ditampilkan).
+
+
+### 1.c
+```
 #_______________________________________________________________________
 #number1c
 onec=$(awk -F "\t" -v st1="$state1" -v st2="$state2" '
@@ -116,8 +161,11 @@ p10=$(cut --complement -d ' ' -f1 <<<"$p10")
 echo -e  "1.c) Produk yang memiliki profit paling sedikit berdasarkan negara bagian
      $state1 dan $state2 adalah sebagai berikut:\n
  -$p1\n -$p2\n -$p3\n -$p4\n -$p5\n -$p6\n -$p7\n -$p8\n -$p9\n -$p10\n"
-</code>
 ```
+Penjelasannya sama seperti bagian a dan b, yang berbeda adalah pada bagian 1.c ini kita sebagai yang sudah jago mengolah data membantu Whits untuk menampilkan 10 produk (product name) yang memiliki keuntungan (profit) paling sedikit berdasarkan 2 negara bagian (state) hasil poin b.
+
+
+
 ## soal2
 > Pada suatu siang, laptop Randolf dan Afairuzr dibajak oleh seseorang dan kehilangan data-data penting. 
 Untuk mencegah kejadian yang sama terulang kembali mereka meminta bantuan kepada Whits karena dia adalah 
