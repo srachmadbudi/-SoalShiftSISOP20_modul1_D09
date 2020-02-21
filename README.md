@@ -118,3 +118,38 @@ echo -e  "1.c) Produk yang memiliki profit paling sedikit berdasarkan negara bag
  -$p1\n -$p2\n -$p3\n -$p4\n -$p5\n -$p6\n -$p7\n -$p8\n -$p9\n -$p10\n"
 </code>
 ```
+## soal1
+> Pada suatu siang, laptop Randolf dan Afairuzr dibajak oleh seseorang dan kehilangan data-data penting. 
+Untuk mencegah kejadian yang sama terulang kembali mereka meminta bantuan kepada Whits karena dia adalah 
+seorang yang punya banyak ide. Whits memikirkan sebuah ide namun dia meminta bantuan kalian kembali agar ide
+tersebut cepat diselesaikan. Idenya adalah kalian 
+>- (a) membuat sebuah script bash yang dapat menghasilkan password secara acak sebanyak 28 karakter yang 
+terdapat huruf besar, huruf kecil, dan angka. 
+>- (b) Password acak tersebut disimpan pada file berekstensi .txt dengan nama berdasarkan argumen yang 
+diinputkan dan ​ HANYA ​ berupa alphabet​ .
+>- (c) Kemudian supaya file .txt tersebut tidak mudah diketahui maka nama filenya akan dienkripsi dengan 
+menggunakan konversi huruf (string manipulation) yang disesuaikan dengan jam(0-23) dibuatnya file tersebut 
+dengan program terpisah dengan (misal: password.txt dibuat pada jam 01.28 maka namanya berubah menjadi 
+qbttxpse.txt dengan perintah ‘​ bash soal2_enkripsi.sh password.txt’. Karena p adalah huruf ke 16 dan
+file dibuat pada jam 1 maka 16+1=17 dan huruf ke 17 adalah q dan begitu pula seterusnya. Apabila melebihi ​ 
+z ​ , akan kembali ke ​ a ​ , contoh: huruf ​ w dengan jam 5.28, maka akan menjadi huruf ​ b.​ ) 
+>- (d) jangan lupa untuk membuat dekripsinya supaya nama file bisa kembali.
+
+> HINT: enkripsi yang digunakan adalah caesar cipher.
+> *Gunakan Bash Script
+
+> Untuk menyimpan password yang telah digenerate, user akan menginputkan nama file di mana password tersebut
+akan disimpan.
+> Sebelumnya akan dicek dulu, apakah nama file yang diinputkan tersebut hanya mengandung alphabet?
+> Jika iya, maka program akan men-generate password kemudian akan disimpan ke dalam file yang sudah
+diinputkan namanya.
+> Jika tidak, maka akan ditampilkan pesan error.
+
+#!/bin/bash
+var=$1
+if [[ $var =~ ^[A-Za-z.]+$ ]]
+> Untuk menghasilkan password dengan ketentuan 28 karakter yang terdapat huruf besar, huruf kecil,dan angka.
+        then cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 28 >> $var	
+        Pesan error yang ditampilkan.
+ 	else echo "Nama file hanya menggunakan alphabet."	
+fi
