@@ -17,7 +17,7 @@ then
 
         dekrip="$(echo "$file" | tr ["$char_awal"-za-"$char_akhir"] [a-z] | tr ["${char_awal^^}"-ZA-"${char_akhir^^}"] [A-Z])"
 
-        cp $1 $dekrip.txt
+        mv $1 $dekrip.txt
         echo "Nama file berhasil didekripsi menjadi $dekrip.txt"
 
 else "Nama file hanya menggunakan alphabet."
