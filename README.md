@@ -167,54 +167,52 @@ Penjelasannya sama seperti bagian a dan b, yang berbeda adalah pada bagian 1.c i
 
 
 ## soal2
-> Pada suatu siang, laptop Randolf dan Afairuzr dibajak oleh seseorang dan kehilangan data-data penting. 
+Pada suatu siang, laptop Randolf dan Afairuzr dibajak oleh seseorang dan kehilangan data-data penting. 
 Untuk mencegah kejadian yang sama terulang kembali mereka meminta bantuan kepada Whits karena dia adalah 
 seorang yang punya banyak ide. Whits memikirkan sebuah ide namun dia meminta bantuan kalian kembali agar ide
 tersebut cepat diselesaikan. Idenya adalah kalian 
->- (a) membuat sebuah script bash yang dapat menghasilkan password secara acak sebanyak 28 karakter yang 
-terdapat huruf besar, huruf kecil, dan angka. 
->- (b) Password acak tersebut disimpan pada file berekstensi .txt dengan nama berdasarkan argumen yang 
+(a) membuat sebuah script bash yang dapat menghasilkan password secara acak sebanyak 28 karakter yang terdapat huruf besar, huruf kecil, 
+dan angka.
+(b) Password acak tersebut disimpan pada file berekstensi .txt dengan nama berdasarkan argumen yang 
 diinputkan dan ​ HANYA ​ berupa alphabet​ .
->- (c) Kemudian supaya file .txt tersebut tidak mudah diketahui maka nama filenya akan dienkripsi dengan 
+(c) Kemudian supaya file .txt tersebut tidak mudah diketahui maka nama filenya akan dienkripsi dengan 
 menggunakan konversi huruf (string manipulation) yang disesuaikan dengan jam(0-23) dibuatnya file tersebut 
 dengan program terpisah dengan (misal: password.txt dibuat pada jam 01.28 maka namanya berubah menjadi 
 qbttxpse.txt dengan perintah ‘​ bash soal2_enkripsi.sh password.txt’. Karena p adalah huruf ke 16 dan
 file dibuat pada jam 1 maka 16+1=17 dan huruf ke 17 adalah q dan begitu pula seterusnya. Apabila melebihi ​ 
 z ​ , akan kembali ke ​ a ​ , contoh: huruf ​ w dengan jam 5.28, maka akan menjadi huruf ​ b.​ ) 
->- (d) jangan lupa untuk membuat dekripsinya supaya nama file bisa kembali.
+(d) jangan lupa untuk membuat dekripsinya supaya nama file bisa kembali.
 
-> HINT: enkripsi yang digunakan adalah caesar cipher.
-> *Gunakan Bash Script
+HINT: enkripsi yang digunakan adalah caesar cipher.
+*Gunakan Bash Script
 
+## Jawaban
 ## 2(a)(b)
-Untuk menyimpan password yang telah digenerate, user akan menginputkan nama file di mana password tersebut
-akan disimpan.
-Sebelumnya akan dicek dulu, apakah nama file yang diinputkan tersebut hanya mengandung alphabet?
-Jika iya, maka program akan men-generate password kemudian akan disimpan ke dalam file yang sudah
-diinputkan namanya.
+Jawaban soal (a) dan (b) dijalankan pada satu program.
+Untuk menyimpan password yang telah digenerate, user akan menginputkan nama file di mana password tersebut akan disimpan.
+Sebelumnya akan dicek dulu, apakah nama file yang diinputkan tersebut hanya mengandung alphabet atau tidak.
+Jika iya, maka program akan men-generate password kemudian akan disimpan ke dalam file yang sudah diinputkan namanya.
 Jika tidak, maka akan ditampilkan pesan error.
 
+
 ```
-#!/bin/bash
+cat /dev/urandom | tr -dc 'a-z' | head -c 10 >> $var
+cat /dev/urandom | tr -dc 'A-Z' | head -c 9 >> $var
+cat /dev/urandom | tr -dc '0-9' | head -c 9 >> $var
+```     
+Untuk memastikan password yang dibuat dengan ketentuan 28 karakter dan minimal terdapat satu huruf kecil, satu huruf kapital, dan satu 
+angka.
 
-var=$1
-
-if [[ $var =~ ^[A-Za-z.]+$ ]]
-        then cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 28 >> $var
-        else echo "Nama file hanya menggunakan alphabet."
-fi
-```
-
-Untuk menghasilkan password dengan ketentuan 28 karakter yang terdapat huruf besar, huruf kecil, dan angka.
-
-        
-        cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 28	
+`cat` digunakan untuk menampilkan isi dari file yang mengikutinya.
+`/dev/urandom/` digunakan untuk menghasilkan bit acak.
+`tr -dc 'a-z'` digunakan untuk mendelete karakter dan hanya menampilkan karakter huruf kecil.
+`tr -dc 'A-Z'` digunakan untuk mendelete karakter dan hanya menampilkan karakter huruf besar.
+`tr -dc '0-9'` digunakan untuk mendelete karakter dan hanya menampilkan karakter huruf angka.
+`head -c ` digunakan untuk menampilkan karakter sebanyak yang diinginkan.
         
 ## 2(c)
-Sama seperti pada program untuk men-generate password.
-Yang mana nama file yang akan dienkripsi akan dicek terlebih dahulu.
-Apakah nama file yang diinputkan hanya mengandung alphabet?
-Jika iya, maka nama file akan dienkripsi.
+Sama seperti pada program untuk men-generate password. Yang mana nama file yang akan dienkripsi akan dicek terlebih dahulu.
+Apakah nama file yang diinputkan hanya mengandung alphabet? Jika iya, maka nama file akan dienkripsi.
 Jika tidak, akan ditampilkan pesan error.
 ```
 #!/bin/bash
@@ -243,45 +241,52 @@ fi
 ```
 
 ```
-cut -d '.' -f1 
+cut -d '.' -f1  
 ```
-Digunakan untuk memotong string setelah tanda '.' 
+Variabel file akan menyimpan nama file tanpa ekstensinya.Kemudian command `cut` digunakan untuk memotong string setelah tanda '.' 
 Sehingga didapat nama file tanpa ekstensi file yang kemudian nama file tersebut akan dienkripsi. 
+
 
 ```
 stat -c %w $1 | date +"%k" -r $1
 ```
-Digunakan untuk mendapatkan waktu dibuatnya file yang berisi password dalam satuan jam.
-Yang kemudian digunakan untuk mengenkripsi nama file.
+Digunakan untuk mendapatkan waktu dibuatnya file yang berisi password dalam satuan jam. Kemudian disimpan dalam variabel geser.
+
 
 ```
-expr $geser + 97
-expr $geser + 96
+int_awal=`expr $geser + 97`
+int_akhir=`expr $geser + 96`
 ```
-Waktu dalam satuan jam yang didapat tadi kemudian ditambah dengan 97,
-karena nilai dari karakter a dalam ASCII adalah 97.
-Diperlukan juga variabel lain yang ditambak dengan 96, untuk mengatasi error.
-Karena setelah huruf z akan kembali ke huruf a.
+Variable `int_awal` digunakan untuk mengenkripsi alphabet, yaitu dengan menambahkan nilai ASCII karakter a-z dengan nilai variabel 
+geser.
+Agar setelah karakter z enkripsi dapat kembali ke karakter a, digunakan variable bantuan `int_akhir`.
+
 
 ```
 chr() {
           printf "\\$(printf '%03o' "$1")"
  }
  ```       
- Digunakan untuk mengubah nilai ASCII menjadi karakter.
- 
+ Merupakan fungsi untuk mengubah nilai ASCII menjadi karakter ASCII.
+
+
  ```
  tr [a-z] ["$char_awal"-za-"$char_akhir"] | 
  tr [A-Z] ["${char_awal^^}"ZA-"${char_akhir^^}"])"
  ```
- Digunakan untuk mengenkripsi, baik huruf kecil maupun huruf besar.
+ Untuk mengenkripsi digunakan command `tr`, menerjemahkan karakter `a-z` menjadi karakter yang telah berhasil digeser berdasarkan waktu 
+ file tersebut dibuat.
+ Selain dapat mengenkripsi karakter huruf kecil, program juga dapat mengenkripsi karakter huruf besar.
  
  ```
  mv $file.txt $enkrip.txt
  ```
- Digunakan untuk merename nama file.
+ Digunakan untuk merename nama file yang belum dienkripsi menjadi nama file yang sudah dienkripsi.
  
  ## 2(d)
+ Menggunakan algoritma yang sama dengan jawaban nomor 2(d). 
+ Perbedaannya ada pada proses dekripsinya.
+ 
  ```
  #!/bin/bash
 
@@ -302,13 +307,49 @@ then
 
         dekrip="$(echo "$file" | tr ["$char_awal"-za-"$char_akhir"] [a-z] | tr ["${char_awal^^}"-ZA-"${char_akhir^^}"] [A-Z])"
 
-        cp $1 $dekrip.txt
+        mv $1 $dekrip.txt
         echo "Nama file berhasil didekripsi menjadi $dekrip.txt"
 
 else "Nama file hanya menggunakan alphabet."
 fi
 ```
-Menggunakan algoritma yang sama dengan nomor 2 (c) hanya beda input.
+Untuk mengdekripsi digunakan command `tr`, menerjemahkan karakter karakter yang telah berhasil digeser berdasarkan waktu file tersebut 
+dibuat kembali menjadi karakter `a-z`.
 
+## Nomor 3
+1 tahun telah berlalu sejak pencampakan hati Kusuma. Akankah sang pujaan hati kembali ke naungan Kusuma? Memang tiada maaf bagi Elen. 
+Tapi apa daya hati yang sudah hancur, Kusuma masih terguncang akan sikap Elen. Melihat kesedihan Kusuma, kalian mencoba menghibur Kusuma 
+dengan mengirimkan gambar kucing. 
+(a) Maka dari itu, kalian mencoba membuat script untuk mendownload 28 gambar dari "​https://loremflickr.com/320/240/cat​" menggunakan 
+command ​wget dan menyimpan file dengan nama "pdkt_kusuma_NO" (contoh: pdkt_kusuma_1, pdkt_kusuma_2,      pdkt_kusuma_3) serta jangan 
+lupa untuk menyimpan ​log messages ​wget kedalam sebuah file "wget.log"​. 
+(b) Karena kalian gak suka ribet, kalian membuat penjadwalan untuk menjalankan script download gambar tersebut. Namun, script download 
+tersebut hanya berjalan setiap 8 jam dimulai dari jam 6.05 setiap hari kecuali hari Sabtu.
+(c) Karena gambar yang didownload dari link tersebut bersifat random, maka ada kemungkinan gambar yang terdownload itu identik. Supaya 
+gambar yang identik tidak dikira Kusuma sebagai spam, maka diperlukan sebuah script untuk memindahkan salah satu gambar identik. Setelah 
+memilah gambar yang identik, maka dihasilkan gambar yang berbeda antara satu dengan yang lain. Gambar yang berbeda tersebut, akan kalian 
+kirim ke Kusuma supaya hatinya kembali ceria. Setelah semua gambar telah dikirim, kalian akan selalu menghibur Kusuma, jadi gambar yang 
+telah terkirim tadi akan kalian simpan kedalam folder /kenangan dan kalian bisa mendownload gambar baru lagi. Maka dari itu buatlah 
+sebuah script untuk mengidentifikasi gambar yang identik dari keseluruhan gambar yang terdownload tadi. Bila terindikasi sebagai gambar 
+yang identik, maka sisakan 1 gambar dan pindahkan sisa file identik tersebut ke dalam folder ./duplicate dengan format filename 
+"duplicate_nomor" (contoh : duplicate_200, duplicate_201). Setelah itu lakukan pemindahan semua gambar yang tersisa kedalam folder 
+./kenangan dengan format filename "kenangan_nomor" (contoh: kenangan_252, kenangan_253). Setelah tidak ada gambar di​current 
+directory ​ , maka lakukan backup seluruh log menjadi ekstensi ".log.bak"​. Hint : Gunakan wget.log untuk membuat location.log yang 
+isinya merupakan hasil dari grep "Location".  
+*Gunakan Bash, Awk dan Crontab 
 
-## Nomor 3 blm selesai mas maaf
+## Jawaban
+## 3(a)
+Untuk mengunduh 28 gambar dari link yang ada digunakan perulangan dari 1 sampai 28.
+
+```
+for i in {1..28}
+do
+ wget -O pdkt_kusuma_$i loremflickr.com/320/240/cat -a wget.log
+done
+```
+
+command `wget` digunakan untuk mengunduh file dari suatu link. (https://loremflickr.com/320/240/cat).
+`-O pdkt_kusuma_$i` agar file yang diunduh dapat disimpan dengan nama pdkt_kusuma_NO.
+`-a wget.log` digunakan untuk menyimpan semua log messages dari `wget` dan menyimpannya dalam file `wget.log`. `-a` adalah append to 
+logfile, maknanya akan menambahkan dari yang sudah ada.
