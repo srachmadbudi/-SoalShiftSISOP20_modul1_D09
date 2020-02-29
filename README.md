@@ -353,3 +353,12 @@ command `wget` digunakan untuk mengunduh file dari suatu link. (https://loremfli
 `-O pdkt_kusuma_$i` agar file yang diunduh dapat disimpan dengan nama pdkt_kusuma_NO.
 `-a wget.log` digunakan untuk menyimpan semua log messages dari `wget` dan menyimpannya dalam file `wget.log`. `-a` adalah append to 
 logfile, maknanya akan menambahkan dari yang sudah ada.
+
+## 3(b)
+Agar script pada soal 3(a) dapat berjalan dengan otomatis, dibuatkan crontab. 
+```
+5 6-23/8 * * 1-5,7 bash /home/elaaaaaaa/SoalShiftSISOP20/Soal3/soal3.sh
+```
+Maknanya bash script `soal3.sh` akan berjalan setiap 8 jam dimulai dari jam 6.05 setiap 
+hari kecuali hari Sabtu
+
